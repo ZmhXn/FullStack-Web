@@ -1,0 +1,150 @@
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    background: #23241f;
+  }
+  
+  .hljs,
+  .hljs-tag,
+  .hljs-subst {
+    color: #f8f8f2;
+  }
+  
+  .hljs-strong,
+  .hljs-emphasis {
+    color: #a8a8a2;
+  }
+  
+  .hljs-bullet,
+  .hljs-quote,
+  .hljs-number,
+  .hljs-regexp,
+  .hljs-literal,
+  .hljs-link {
+    color: #ae81ff;
+  }
+  
+  .hljs-code,
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-class {
+    color: #a6e22e;
+  }
+  
+  .hljs-strong {
+    font-weight: bold;
+  }
+  
+  .hljs-emphasis {
+    font-style: italic;
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-name,
+  .hljs-attr {
+    color: #f92672;
+  }
+  
+  .hljs-symbol,
+  .hljs-attribute {
+    color: #66d9ef;
+  }
+  
+  .hljs-params,
+  .hljs-class .hljs-title {
+    color: #f8f8f2;
+  }
+  
+  .hljs-string,
+  .hljs-type,
+  .hljs-built_in,
+  .hljs-builtin-name,
+  .hljs-selector-id,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo,
+  .hljs-addition,
+  .hljs-variable,
+  .hljs-template-variable {
+    color: #e6db74;
+  }
+  
+  .hljs-comment,
+  .hljs-deletion,
+  .hljs-meta {
+    color: #75715e;
+  }
+  /* 代码块高亮 */
+pre {
+  display: block;
+  background-color: #283646 !important;
+  padding: .5rem !important;
+  overflow-y: auto;
+  font-weight: 300;
+  font-family: Menlo, monospace;
+  border-radius: .3rem;}
+code {
+  display: inline-block;
+  border-radius: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #ff502c;
+  margin: 0px 3px;
+  line-height: 1.1rem;
+}
+.nav-title{
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgb(30, 144, 255);
+}
+.toc-list {
+     margin-top: 10px;
+}
+table {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 0;
+}
+table tr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+table tr th {
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #4f4f4f;
+  line-height: 22px;
+  padding: 8px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #eff3f5;
+}
+table tbody tr:nth-child(2n) {
+  background-color: #f7f7f7;
+}
+table  tbody {
+  border: 0;
+}
+table  tbody tr td {
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #4f4f4f;
+  line-height: 22px;
+  padding: 8px;
+  font-weight: 700;
+}

@@ -1,68 +1,43 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 个人博客
 
-## Available Scripts
 
-In the project directory, you can run:
+## react-markdown是react专用的markdown解析组件，markdown-navbar生成目录 
+import ReactMarkdown from 'react-markdown'
+import MarkNav from 'markdown-navbar'
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## marked + highlight.js 有高亮效果
+### Tocify 生成目录 （别人封装的）
+import Tocify from './../../components/tocify.tsx'
+### 引入模块
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
+### 设置一下marked.setOptions
+const renderer = new marked.Renderer();
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+marked.setOptions({
+    renderer: renderer, 
+    gfm: true,
+    pedantic: false,
+    sanitize: false,
+    tables: true,
+    breaks: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+    }
+  }); 
 
-### `yarn test`
+let html = marked(props.article_content) 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+renderer: 这个是必须填写的，你可以通过自定义的Renderer渲染出自定义的格式
+gfm：启动类似Github样式的Markdown,填写true或者false
+pedatic：只解析符合Markdown定义的，不修正Markdown的错误。填写true或者false
+sanitize: 原始输出，忽略HTML标签，这个作为一个开发人员，一定要写flase
+tables： 支持Github形式的表格，必须打开gfm选项
+breaks: 支持Github换行符，必须打开gfm选项，填写true或者false
+smartLists：优化列表输出，这个填写ture之后，你的样式会好看很多，所以建议设置成ture
+highlight: 高亮显示规则 ，这里我们将使用highlight.js来完成
