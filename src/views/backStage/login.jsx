@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
 import { withRouter } from "react-router"
-import FootNav from './../../components/frontCom/Footer'
-import HeadNav from './../../components/frontCom/Header'
-import Author from './../../components/frontCom/Author'
 import { DeleteGlobalLoading, GlobalLoadingShow } from "./../../redux/globalLoading"
 import { connect } from 'react-redux'
- class About extends Component {
+import './../../../public/css/login.less'
+class Login extends Component {
     constructor (props) {
         super (props)
         this.state = {
         }
     }
 
+    componentDidMount () {
+    }
+
     render () {
+
         return (
-            <div>
-                <HeadNav />
-                <div className="about-me m-t60">
-                    <a href="/login">login</a>
+            <div className="login">
+                <div className="title">
+                    后台博客系统
                 </div>
-                <FootNav />
             </div>
         )
     }
@@ -31,4 +31,4 @@ export default connect(
         GlobalLoadingShow,
         DeleteGlobalLoading
     }
-)(withRouter(About))
+)(withRouter(Login))

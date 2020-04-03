@@ -11,10 +11,14 @@ class Header extends Component {
     state = {
         current: 'home',
     }
+    componentDidMount () {
+        this.setState({ current: this.props.location.pathname.split('/')[1] || 'home' })
+    }
     handleClick= (e) => { //点击事件
         this.setState({ current: e.key })
     }
     render () {
+        console.log(this.state.current)
         return (
             <div className="head-nav">
                 <div className="nav-wrap">
@@ -34,13 +38,13 @@ class Header extends Component {
                                     首页
                                 </NavLink>
                             </Menu.Item>
-                            <Menu.Item key="article">
+                            <Menu.Item key="articlesharing">
                                 <NavLink  to="/articlesharing?id=1"  className='link' activeClassName='active'>
                                     <ShareAltOutlined />
                                     文章分享
                                 </NavLink>
                             </Menu.Item>
-                            <Menu.Item key="aboutme">
+                            <Menu.Item key="about">
                                 <NavLink  to="/about"  className='link' activeClassName='active'>
                                     <TeamOutlined />
                                     关于我
