@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './../public/css/common.less'
 import zh_CN from 'antd/lib/locale-provider/zh_CN'
-import {LocaleProvider, Spin} from "antd";
-import { connect } from "react-redux";
+import {LocaleProvider, Spin} from "antd"
+import { connect } from "react-redux"
 import Router from './route/router'
 import 'antd/dist/antd.less'
 

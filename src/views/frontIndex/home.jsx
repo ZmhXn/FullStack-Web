@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router"
 import { BackTop, Pagination, Affix } from 'antd'
 import { MessageOutlined, EyeOutlined, LikeOutlined } from '@ant-design/icons'
+import { connect } from 'react-redux'
 import axios from './../../config/http' 
 import './../../../public/css/zmh.less'
+import FootNav from './../../components/frontCom/Footer'
+import HeadNav from './../../components/frontCom/Header'
 import Author from './../../components/frontCom/Author'
 import { DeleteGlobalLoading, GlobalLoadingShow } from "./../../redux/globalLoading"
-import { connect } from 'react-redux'
 
 class Home extends Component {
     constructor (props) {
@@ -124,73 +126,77 @@ class Home extends Component {
     render () {
         const { currentIndex, newData, totalCount, page, pageSize } = this.state
         return (
-            <div className="front-home m-t60">
-                {/* 回顶部  */}
-                <BackTop />
-                <div className="con-top">
-                    <ul className="select-con">
-                        {
-                            selectData.map((item, index) => (
-                                <li key={`s${index}`} className={ currentIndex == index ? 'current' : '' , "cont" } onClick={() => this.changeCurrent(index)}>
-                                    { item.name }
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div className="home-content">
-                    <div className="con-left">
-                        <ul className="details-con">
+            <div>
+                <HeadNav />
+                <div className="front-home m-t60">
+                    {/* 回顶部  */}
+                    <BackTop />
+                    <div className="con-top">
+                        <ul className="select-con">
                             {
-                                newData.map((item, index) => (
-                                    <li key={`n${index}`} className="cont"> 
-                                        <div className="title" onClick={() => this.detail(item._id, 1)}>
-                                            { item.title }
-                                        </div>
-                                        <div className="time">
-                                            <span className="time-date">{ this.getDateDiff(item.time) }</span>
-                                            <span className="time-type">{ item.type }</span>
-                                        </div>
-                                        <div className="content">
-                                            { item.introduce }
-                                        </div>
-                                        <div className="praise">
-                                            <span className="par" onClick={() => this.detail(item._id, 2)}>
-                                                <EyeOutlined />
-                                                <i>{ item.read_num }</i>
-                                            </span>
-                                            <span className="par" onClick={() => this.praise(item._id) }>
-                                                <LikeOutlined />
-                                                <i>{ item.praise_num }</i>
-                                            </span>
-                                            <span className="par" onClick={() => this.detail(item._id, 3)}>
-                                                <MessageOutlined />
-                                                <i>{ item.mes_num }</i>
-                                            </span>
-                                        </div>
+                                selectData.map((item, index) => (
+                                    <li key={`s${index}`} className={ currentIndex == index ? 'current' : '' , "cont" } onClick={() => this.changeCurrent(index)}>
+                                        { item.name }
                                     </li>
                                 ))
                             }
                         </ul>
-                        {/* 分页 */}
-                        <Pagination
-                            showSizeChanger
-                            pageSizeOptions={['10', '15', '20','30']}
-                            onShowSizeChange={this.onShowSizeChange}
-                            onChange={this.onChange}
-                            showTotal={this.showTotal}
-                            current={page}
-                            pageSize={pageSize}
-                            total={totalCount}
-                        />
                     </div>
-                    <div className="common-right">
-                        {/* 作者信息 */}
-                        <Affix offsetTop={60}>
-                            <Author />
-                        </Affix>
+                    <div className="home-content">
+                        <div className="con-left">
+                            <ul className="details-con">
+                                {
+                                    newData.map((item, index) => (
+                                        <li key={`n${index}`} className="cont"> 
+                                            <div className="title" onClick={() => this.detail(item._id, 1)}>
+                                                { item.title }
+                                            </div>
+                                            <div className="time">
+                                                <span className="time-date">{ this.getDateDiff(item.time) }</span>
+                                                <span className="time-type">{ item.type }</span>
+                                            </div>
+                                            <div className="content">
+                                                { item.introduce }
+                                            </div>
+                                            <div className="praise">
+                                                <span className="par" onClick={() => this.detail(item._id, 2)}>
+                                                    <EyeOutlined />
+                                                    <i>{ item.read_num }</i>
+                                                </span>
+                                                <span className="par" onClick={() => this.praise(item._id) }>
+                                                    <LikeOutlined />
+                                                    <i>{ item.praise_num }</i>
+                                                </span>
+                                                <span className="par" onClick={() => this.detail(item._id, 3)}>
+                                                    <MessageOutlined />
+                                                    <i>{ item.mes_num }</i>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                            {/* 分页 */}
+                            <Pagination
+                                showSizeChanger
+                                pageSizeOptions={['10', '15', '20','30']}
+                                onShowSizeChange={this.onShowSizeChange}
+                                onChange={this.onChange}
+                                showTotal={this.showTotal}
+                                current={page}
+                                pageSize={pageSize}
+                                total={totalCount}
+                            />
+                        </div>
+                        <div className="common-right">
+                            {/* 作者信息 */}
+                            <Affix offsetTop={60}>
+                                <Author />
+                            </Affix>
+                        </div>
                     </div>
                 </div>
+                <FootNav />
             </div>
         )
     }
@@ -210,7 +216,7 @@ const selectData = [
 
 export default connect(
     null,
-    {
+    {   
         GlobalLoadingShow,
         DeleteGlobalLoading
     }

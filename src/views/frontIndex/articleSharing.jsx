@@ -3,6 +3,8 @@ import { withRouter } from "react-router"
 import { BackTop, Affix, Input, Button } from 'antd'
 import axios from './../../config/http' 
 import './../../../public/css/zmh.less'
+import FootNav from './../../components/frontCom/Footer'
+import HeadNav from './../../components/frontCom/Header'
 import Author from './../../components/frontCom/Author'
 import './../../../public/css/markdownNav.less'
 import marked from 'marked'
@@ -59,36 +61,40 @@ const { TextArea } = Input;
         const { html } = this.state
 
         return (
-            <div className="artical-share  front-home m-t60">
-                {/* 回顶部  */}
-                <BackTop />
-                <div className="home-content">
-                    <div className="con-left">
-                        <ul className="details-con">
-                            <li className="cont">
-                                <TextArea name="markdown" id="" cols="30" rows="10" onChange={this.textChange}></TextArea>
-                            </li>
-                            <li className="cont">
-                                <div dangerouslySetInnerHTML = {{__html: marked(html)}}></div>
-                            </li>
-                        </ul>
-                        <Button onClick={this.submit}>提交</Button>
-                    </div>
-                    <div className="common-right">
-                        {/* 作者信息 */}
-                        <Author />
-                        {/* Affix 将页面元素钉在可视范围 */}
-                        <Affix offsetTop={60}>
-                            {/* markdown的目录 */}
-                            <div className="detailed-nav con-right">
-                                <div className="nav-title">文章目录</div>
-                                <div className="toc-list">
-                                    { tocify && tocify.render() }
+            <div>
+                <HeadNav />
+                <div className="artical-share  front-home m-t60">
+                    {/* 回顶部  */}
+                    <BackTop />
+                    <div className="home-content">
+                        <div className="con-left">
+                            <ul className="details-con">
+                                <li className="cont">
+                                    <TextArea name="markdown" id="" cols="30" rows="10" onChange={this.textChange}></TextArea>
+                                </li>
+                                <li className="cont">
+                                    <div dangerouslySetInnerHTML = {{__html: marked(html)}}></div>
+                                </li>
+                            </ul>
+                            <Button onClick={this.submit}>提交</Button>
+                        </div>
+                        <div className="common-right">
+                            {/* 作者信息 */}
+                            <Author />
+                            {/* Affix 将页面元素钉在可视范围 */}
+                            <Affix offsetTop={60}>
+                                {/* markdown的目录 */}
+                                <div className="detailed-nav con-right">
+                                    <div className="nav-title">文章目录</div>
+                                    <div className="toc-list">
+                                        { tocify && tocify.render() }
+                                    </div>
                                 </div>
-                            </div>
-                        </Affix>
+                            </Affix>
+                        </div>
                     </div>
                 </div>
+                <FootNav />
             </div>
         )
     }

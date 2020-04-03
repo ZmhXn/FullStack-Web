@@ -6,6 +6,8 @@ import hljs from "highlight.js"
 import { MessageOutlined, ScheduleOutlined, EyeOutlined, LikeOutlined } from '@ant-design/icons'
 import axios from './../../config/http' 
 import './../../../public/css/zmh.less'
+import FootNav from './../../components/frontCom/Footer'
+import HeadNav from './../../components/frontCom/Header'
 import Author from './../../components/frontCom/Author'
 import './../../../public/css/monokai-sublime.css'
 import Tocify from './../../components/tocify.tsx'
@@ -152,112 +154,116 @@ class ArticleSharing extends Component {
         }) 
 
         return (
-            <div className="artical-share  front-home m-t60">
-                {/* 回顶部  */}
-                <BackTop />
-                <div className="home-content" >
-                    <div className="con-left" ref={ node => { this.commentEnd = node } }>
-                        <div className="detail-content">
-                            <div className="bread-div">
-                                <Breadcrumb>
-                                    <Breadcrumb.Item>
-                                    <a href="/">首页</a>
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>
-                                        文章分享
-                                    </Breadcrumb.Item>
-                                    <Breadcrumb.Item>{ detail.title }</Breadcrumb.Item>
-                                </Breadcrumb>
-                            </div>
-                            <div className="detail-infos">
-                                <div className="detail-intro">
-                                    <div className="title">{ detail.title }</div>
-                                    <div className="infos">
-                                        <span className="par">
-                                            <ScheduleOutlined />
-                                            <i>{ detail.time }</i>
+            <div>
+                <HeadNav />
+                <div className="artical-share  front-home m-t60">
+                    {/* 回顶部  */}
+                    <BackTop />
+                    <div className="home-content" >
+                        <div className="con-left" ref={ node => { this.commentEnd = node } }>
+                            <div className="detail-content">
+                                <div className="bread-div">
+                                    <Breadcrumb>
+                                        <Breadcrumb.Item>
+                                        <a href="/">首页</a>
+                                        </Breadcrumb.Item>
+                                        <Breadcrumb.Item>
+                                            文章分享
+                                        </Breadcrumb.Item>
+                                        <Breadcrumb.Item>{ detail.title }</Breadcrumb.Item>
+                                    </Breadcrumb>
+                                </div>
+                                <div className="detail-infos">
+                                    <div className="detail-intro">
+                                        <div className="title">{ detail.title }</div>
+                                        <div className="infos">
+                                            <span className="par">
+                                                <ScheduleOutlined />
+                                                <i>{ detail.time }</i>
+                                            </span>
+                                            <span className="par">
+                                                <EyeOutlined />
+                                                <i>{ detail.read_num }</i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {
+                                        (detail && detail.content) && 
+                                        <div dangerouslySetInnerHTML = {{__html: marked(detail.content)}}></div>
+                                    }
+                                    <div className="praise-note">
+                                        <span className="par" onClick={ this.praise }>
+                                            <LikeOutlined />
+                                            <span>点赞</span>
+                                            <i>{ detail.praise_num != 0 ? detail.praise_num : '' }</i>
                                         </span>
                                         <span className="par">
-                                            <EyeOutlined />
-                                            <i>{ detail.read_num }</i>
+                                            <MessageOutlined />
+                                            <span>留言</span>
+                                            <i>{ detail.mes_num != 0 ? detail.mes_num : ''}</i>
                                         </span>
                                     </div>
-                                </div>
-                                {
-                                    (detail && detail.content) && 
-                                    <div dangerouslySetInnerHTML = {{__html: marked(detail.content)}}></div>
-                                }
-                                <div className="praise-note">
-                                    <span className="par" onClick={ this.praise }>
-                                        <LikeOutlined />
-                                        <span>点赞</span>
-                                        <i>{ detail.praise_num != 0 ? detail.praise_num : '' }</i>
-                                    </span>
-                                    <span className="par">
-                                        <MessageOutlined />
-                                        <span>留言</span>
-                                        <i>{ detail.mes_num != 0 ? detail.mes_num : ''}</i>
-                                    </span>
-                                </div>
-                                <div className="note-details" id="A1">
-                                    <TextArea name="markdown" id="" cols="30" rows="3" maxLength="500" placeholder="想对作者说点什么" onChange={ this.textChange }></TextArea>
-                                    <div className="send-note">
-                                        还能输入{ 500 - value.length }个字符
-                                    {   value != '' ?
-                                        <Button onClick={ this.cancelSend }>取消回复</Button>
-                                        : ''
-                                    }
-                                        <Button type="primary" danger onClick={ this.sendNote }>发表评论</Button>
+                                    <div className="note-details" id="A1">
+                                        <TextArea name="markdown" id="" cols="30" rows="3" maxLength="500" placeholder="想对作者说点什么" onChange={ this.textChange }></TextArea>
+                                        <div className="send-note">
+                                            还能输入{ 500 - value.length }个字符
+                                        {   value != '' ?
+                                            <Button onClick={ this.cancelSend }>取消回复</Button>
+                                            : ''
+                                        }
+                                            <Button type="primary" danger onClick={ this.sendNote }>发表评论</Button>
+                                        </div> 
                                     </div> 
-                                </div> 
-                                {
-                                    comments.length ? 
-                                    <div className="leaving-infos">
-                                        <div className="tip-title">最新评论</div>
-                                        <ul>
-                                            {
-                                                comments.map((item, index) => (
-                                                    <li  key={`c${index}`}>
-                                                        <div className="author-head">
-                                                            <img src={require('./../../../public/image/' + item.author)}/>
-                                                        </div>
-                                                        <div className="comment-detail">
-                                                            <div className="name-date">
-                                                                <span>{ item.name }</span>
-                                                                <span>{ item.date }</span>
+                                    {
+                                        comments.length ? 
+                                        <div className="leaving-infos">
+                                            <div className="tip-title">最新评论</div>
+                                            <ul>
+                                                {
+                                                    comments.map((item, index) => (
+                                                        <li  key={`c${index}`}>
+                                                            <div className="author-head">
+                                                                <img src={require('./../../../public/image/' + item.author)}/>
                                                             </div>
-                                                            <div className="content">{ item.content }</div>
-                                                            <div className="praise">
-                                                                <span className="answer">回复</span>
-                                                                <span onClick={() => this.addCommentsPraise(item._id)}>
-                                                                    <LikeOutlined /> { item.praise_num != 0 && item.praise_num }
-                                                                </span>
+                                                            <div className="comment-detail">
+                                                                <div className="name-date">
+                                                                    <span>{ item.name }</span>
+                                                                    <span>{ item.date }</span>
+                                                                </div>
+                                                                <div className="content">{ item.content }</div>
+                                                                <div className="praise">
+                                                                    <span className="answer">回复</span>
+                                                                    <span onClick={() => this.addCommentsPraise(item._id)}>
+                                                                        <LikeOutlined /> { item.praise_num != 0 && item.praise_num }
+                                                                    </span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </li> 
-                                                )) 
-                                            }
-                                        </ul>
-                                    </div> : ''
-                                }
-                            </div>
-                        </div>
-                    </div> 
-                    <div className="common-right">
-                        {/* 作者信息 */}
-                        <Author />
-                        {/* Affix 将页面元素钉在可视范围 */}
-                        <Affix offsetTop={60}>
-                            {/* markdown的目录 */}
-                            <div className="detailed-nav con-right">
-                                <div className="nav-title">文章目录</div>
-                                <div className="toc-list">
-                                    { (detail && detail.content) ? tocify && tocify.render() : <Skeleton />}
+                                                        </li> 
+                                                    )) 
+                                                }
+                                            </ul>
+                                        </div> : ''
+                                    }
                                 </div>
                             </div>
-                        </Affix>
+                        </div> 
+                        <div className="common-right">
+                            {/* 作者信息 */}
+                            <Author />
+                            {/* Affix 将页面元素钉在可视范围 */}
+                            <Affix offsetTop={60}>
+                                {/* markdown的目录 */}
+                                <div className="detailed-nav con-right">
+                                    <div className="nav-title">文章目录</div>
+                                    <div className="toc-list">
+                                        { (detail && detail.content) ? tocify && tocify.render() : <Skeleton />}
+                                    </div>
+                                </div>
+                            </Affix>
+                        </div>
                     </div>
                 </div>
+                <FootNav />
             </div>
         )
     }
