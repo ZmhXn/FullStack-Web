@@ -53,23 +53,23 @@ _axios.interceptors.response.use(
     response => {
         if (!(response.config.authParams && response.config.authParams.endNone)) {
             //请求成功后，根据数据进行判断，提示语或者返回首页
-            // if (response.data.status == 1) {
-            //     MINT.MessageBox.alert(response.data.message || response.data.msg,'提示');
-            // }
-            // else if (response.data.status == 2) {  //去登录
-            //     MINT.MessageBox.alert(response.data.message || response.data.msg,'提示',{
-            //         callback: action => {
-            //             router.push(
-            //                 {
-            //                     path: '/login',
-            //                     query: {
-            //                         redirect: router.currentRoute.fullPath
-            //                     }
-            //                 }
-            //             )
-            //         }
-            //     });
-            // }
+            if (response.data.status == 1) {
+                message.error(response.data.message || response.data.msg,'提示');
+            }
+            else if (response.data.status == 2) {  //去登录
+                message.error(response.data.message || response.data.msg,'提示',{
+                    callback: action => {
+                        // router.push(
+                        //     {
+                        //         path: '/login',
+                        //         query: {
+                        //             redirect: router.currentRoute.fullPath
+                        //         }
+                        //     }
+                        // )
+                    }
+                });
+            }
         }
         return response.data
     },
