@@ -18,7 +18,7 @@ class Header extends Component {
         this.setState({ current: e.key })
     }
     render () {
-        console.log(this.state.current)
+      
         return (
             <div className="head-nav">
                 <div className="nav-wrap">

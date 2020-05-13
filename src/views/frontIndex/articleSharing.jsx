@@ -30,9 +30,10 @@ const { TextArea } = Input;
     }
     submit = () => {
         this.props.GlobalLoadingShow('文章数据获取')
-        axios.post('/api/news/addArtical', { content: this.state.html }
+        axios.post('/api/news/addArtical', { content: this.state.html, user_id: '5e8f28146407db008492ff30' }
         ).then(res => {
             if (res.status == 0) {
+                this.props.DeleteGlobalLoading()
                 // this.setState({
                 //     detail: res.detailList
                 // })

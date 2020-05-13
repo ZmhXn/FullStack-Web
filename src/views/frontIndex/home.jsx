@@ -46,10 +46,25 @@ class Home extends Component {
         return `共 ${total} 条`
     }
     //初始化
-    init = () => {
+    init = async () => {
         const { page, pageSize } = this.state
-        this.props.GlobalLoadingShow('文章数据获取')
-        axios.post('/api/news/queryNews', { page, pageSize }
+        // this.props.GlobalLoadingShow('文章数据获取')
+        let checkLogin = await this.checkLogin()
+        if (checkLogin.status == 0) {
+            this.queryNews(page, pageSize, checkLogin.userInfo._id)
+        }
+    }
+    /**
+     * 验证是否登录
+     */
+    checkLogin = () => {
+        return axios.get('/api/users/checkLogin')   
+    }
+    /**
+     * 根据用户的user_id查询相关文章
+     */
+    queryNews = (page, pageSize, user_id) => {
+        axios.post('/api/news/queryNews', { page, pageSize, user_id }
         ).then(res => {
             this.props.DeleteGlobalLoading()
             if (res.status == 0) {
@@ -59,7 +74,7 @@ class Home extends Component {
                 })
             }
         })
-    }
+     }
     /**点赞 */
     praise = (id) => {
         const { newData } = this.state
