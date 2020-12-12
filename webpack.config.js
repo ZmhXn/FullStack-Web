@@ -18,7 +18,8 @@ const webpackConfig = {
         filename: '[name].[hash].bundle.js', //chunkhush 只用于生产环境,
         library: 'myLibrary',
         chunkFilename: '[name].[hash].chunk.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: { //导入以这些结尾的文件，不用写后缀名
         extensions: [".js", ".json", ".jsx", ".css"],

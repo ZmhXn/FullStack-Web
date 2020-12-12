@@ -9,7 +9,7 @@ import {
     ExportOutlined
   } from '@ant-design/icons'
 import { Layout, Menu, Breadcrumb, Icon } from 'antd'
-const { Header, Content, Footer, Sider } = Layout
+const { Content, Footer, Sider } = Layout
 const { SubMenu } = Menu
 import { withRouter } from "react-router"
 import { DeleteGlobalLoading, GlobalLoadingShow } from "./../../redux/globalLoading"
@@ -17,14 +17,48 @@ import { connect } from 'react-redux'
 import axios from './../../config/http' 
 import './../../../public/css/login.less'
 import headImg from './../../../public/image/head-portrait.png'
+import { Route, Switch, Redirect } from "react-router-dom"
+import AddArticle from './article/addArticle'
+import HomePage from './homePage'
 
-class Index extends Component {
+class MenuLayOut extends Component {
     constructor (props) {
         super (props)
         this.state = {
             collapsed: false, //左侧菜单展开折叠
-            keyList: ['首页']
+            keyList: ['首页'], //默认页面
+            keyDetail: [ //菜单栏的url
+                {
+                    name: '首页',
+                    url: 'homePage'
+                },
+                {
+                    name: '添加文章',
+                    url: 'addArticle'
+                },
+                {
+                    name: '文章列表',
+                    url: 'articleList'
+                },
+                {
+                    name: '留言',
+                    url: 'leavingMessage'
+                },
+                {
+                    name: '设置',
+                    url: 'setUp'
+                }
+            ]
         }
+    }
+    componentDidMount () {
+        this.state.keyDetail.forEach(item => {
+            if (this.props.location.pathname.split('/')[2] == item.url) {
+                this.setState({
+                    keyList: [item.name]
+                })
+            }
+        })
     }
     /** 
      * 
@@ -35,9 +69,13 @@ class Index extends Component {
         })
     }
     handleClickArticle = (e) => {
-        console.log(e)
         this.setState({
             keyList: e.keyPath
+        })
+        this.state.keyDetail.forEach(item => {
+            if (item.name == e.key) {
+                this.props.history.push('/index/' + item.url)
+            }
         })
     }
     /**
@@ -54,6 +92,7 @@ class Index extends Component {
 
     render () {
         const { collapsed, keyList } = this.state
+        
         return (
             <Layout style={{ minHeight: '100vh' }} className='index'>
                 <Sider  collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
@@ -61,7 +100,7 @@ class Index extends Component {
                         <img src={ headImg }  alt="" srcset=""/>
                         <p>站在南极看企鹅</p>
                     </div>
-                    <Menu theme="dark" defaultSelectedKeys={['首页']} mode="inline">
+                    <Menu theme="dark" selectedKeys={keyList[0]} mode="inline">
                         <Menu.Item key="首页" onClick={this.handleClickArticle}>
                             <HomeOutlined />
                             <span>首页</span>
@@ -114,7 +153,13 @@ class Index extends Component {
                                 退出
                             </li>
                             </ul>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>博客工作台.</div>
+                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+                            <Switch>
+                                <Route path="/index/homePage" component={HomePage}/>
+                                <Route path="/index/addArticle" component={AddArticle}/>
+                                <Redirect from="/index" to="/index/homePage" exact/>
+                            </Switch>
+                        </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Mr.Zhang's blog</Footer>
                 </Layout>
@@ -129,4 +174,4 @@ export default connect(
         GlobalLoadingShow,
         DeleteGlobalLoading
     }
-)(withRouter(Index))
+)(withRouter(MenuLayOut))
